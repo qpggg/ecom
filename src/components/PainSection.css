@@ -1,0 +1,78 @@
+.pain__inner {
+  width: 100%;
+}
+
+.pain__layout {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: center;
+  perspective: 1200px;
+}
+
+.pain__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.pain__title em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.pain__lead {
+  margin: 1.25rem 0 0;
+  max-width: 28rem;
+  font-size: clamp(0.9375rem, 1.2vw, 1.0625rem);
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+.pain__note {
+  margin: 1.5rem 0 0;
+  padding-left: 1rem;
+  border-left: 2px solid var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.pain__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.pain__card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  align-items: start;
+  padding: 1rem 1.125rem;
+  transform-style: preserve-3d;
+}
+
+.pain__card-index {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.pain__card p {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: var(--text-primary);
+}
+
+@media (max-width: 900px) {
+  .pain__layout {
+    grid-template-columns: 1fr;
+  }
+}

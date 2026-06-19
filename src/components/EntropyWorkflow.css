@@ -1,0 +1,238 @@
+.entropy {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  aspect-ratio: 16 / 10;
+  border-radius: 14px;
+  border: 1px solid var(--stroke-strong);
+  background: var(--bg-dark);
+  overflow: hidden;
+  isolation: isolate;
+  perspective: 1400px;
+  perspective-origin: 50% 45%;
+}
+
+.entropy--full {
+  flex: 1;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  min-height: 0;
+  aspect-ratio: auto;
+  border: none;
+  border-radius: 0;
+  perspective: 1800px;
+  perspective-origin: 50% 50%;
+}
+
+.entropy__grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(148, 163, 184, 0.16) 1px, transparent 1px);
+  background-size: clamp(12px, 1.2vw, 18px) clamp(12px, 1.2vw, 18px);
+  pointer-events: none;
+}
+
+.entropy--full .entropy__grid-bg {
+  background-size: clamp(14px, 1.4vw, 22px) clamp(14px, 1.4vw, 22px);
+}
+
+.entropy__shell {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 4;
+  padding: clamp(0.75rem, 1.5vw, 1.25rem) clamp(1rem, 2.5vw, 2.5rem);
+  border-bottom: 1px solid var(--stroke);
+  background: linear-gradient(to bottom, rgba(11, 15, 20, 0.92), transparent);
+  pointer-events: none;
+}
+
+.entropy__shell-top {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.entropy__pill {
+  padding: 0.35rem 0.65rem;
+  font-family: var(--font-mono);
+  font-size: clamp(0.5625rem, 0.7vw, 0.6875rem);
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  border: 1px solid var(--stroke);
+  border-radius: 4px;
+}
+
+.entropy__pill--active {
+  color: var(--text-on-accent);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.entropy__shell-title {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: clamp(0.625rem, 0.8vw, 0.75rem);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.entropy__entropy-tag {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-mono);
+  font-size: clamp(3rem, 12vw, 8rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.08);
+  pointer-events: none;
+  user-select: none;
+}
+
+.entropy__world {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.entropy__edges {
+  position: absolute;
+  inset: 14% 6% 10%;
+  width: calc(100% - 12%);
+  height: calc(100% - 24%);
+  overflow: visible;
+  z-index: 0;
+}
+
+.entropy--full .entropy__edges {
+  inset: 16% 8% 12%;
+  width: calc(100% - 16%);
+  height: calc(100% - 28%);
+}
+
+.entropy__edge {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 0.3;
+  stroke-dasharray: 140;
+  opacity: 0.75;
+}
+
+.entropy__edge--outcome {
+  stroke-width: 0.38;
+  opacity: 0.95;
+}
+
+.entropy__node {
+  position: absolute;
+  z-index: 2;
+  width: clamp(96px, 10vw, 140px);
+  margin: -2.25rem 0 0 -3.5rem;
+  transform-style: preserve-3d;
+  border: 1px solid var(--stroke-strong);
+  border-radius: 12px;
+  background: var(--surface);
+  backdrop-filter: blur(10px);
+  box-shadow:
+    0 0 0 1px rgba(148, 163, 184, 0.08),
+    0 24px 48px rgba(0, 0, 0, 0.45);
+}
+
+.entropy--full .entropy__node {
+  width: clamp(100px, 11vw, 156px);
+  margin-left: -3.75rem;
+}
+
+.entropy__node--outcome {
+  z-index: 3;
+  width: clamp(112px, 12vw, 172px);
+  margin-left: -4.25rem;
+  border-color: var(--accent);
+}
+
+.entropy--full .entropy__node--outcome {
+  width: clamp(116px, 12.5vw, 180px);
+  margin-left: -4.5rem;
+}
+
+.entropy__node--outcome .entropy__node-icon {
+  color: var(--text-primary);
+  background: rgba(148, 163, 184, 0.14);
+}
+
+.entropy__node--outcome .entropy__node-body strong {
+  color: var(--text-primary);
+}
+
+.entropy__node-icon {
+  display: grid;
+  place-items: center;
+  height: clamp(2rem, 3vw, 2.75rem);
+  font-size: clamp(0.875rem, 1.2vw, 1.125rem);
+  color: var(--accent);
+  border-bottom: 1px solid var(--stroke);
+  background: rgba(148, 163, 184, 0.05);
+}
+
+.entropy__node-body {
+  padding: clamp(0.5rem, 0.8vw, 0.65rem) clamp(0.55rem, 0.9vw, 0.75rem);
+}
+
+.entropy__node-body strong {
+  display: block;
+  font-size: clamp(0.6875rem, 0.9vw, 0.8125rem);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.entropy__node-body span {
+  display: block;
+  margin-top: 0.15rem;
+  font-family: var(--font-mono);
+  font-size: clamp(0.5625rem, 0.65vw, 0.625rem);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.entropy__debris {
+  position: absolute;
+  z-index: 3;
+  padding: clamp(0.4rem, 0.6vw, 0.55rem) clamp(0.65rem, 1vw, 0.875rem);
+  margin: 0 0 0 -2.5rem;
+  font-size: clamp(0.6875rem, 0.9vw, 0.8125rem);
+  color: var(--text-secondary);
+  white-space: nowrap;
+  border: 1px dashed rgba(148, 163, 184, 0.35);
+  border-radius: 8px;
+  background: var(--surface-deep);
+  transform-style: preserve-3d;
+}
+
+@media (max-width: 900px) {
+  .entropy:not(.entropy--full) {
+    max-width: 100%;
+    aspect-ratio: 4 / 3;
+  }
+
+  .entropy--full .entropy__node {
+    width: 88px;
+    margin-left: -2.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entropy__node,
+  .entropy__debris,
+  .entropy__world {
+    transform: none !important;
+  }
+
+  .entropy__debris {
+    display: none;
+  }
+}
