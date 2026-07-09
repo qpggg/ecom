@@ -1,7 +1,5 @@
 import './MetricsSection.css'
 
-const LIST_TOP = 257 // arrow6 bottom (241) + 16px gap
-
 const STATS = [
   {
     num: '01',
@@ -39,7 +37,7 @@ export function MetricsSection() {
 
         <span className="metrics__arrow6" aria-hidden />
 
-        <div className="metrics__list" style={{ top: LIST_TOP }}>
+        <div className="metrics__list">
           {STATS.map((item, index) => (
             <div key={item.num} className="metrics__entry">
               <span className="metrics__num">{item.num}</span>

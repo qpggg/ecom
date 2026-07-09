@@ -66,8 +66,8 @@
   font-weight: 700;
   font-synthesis: weight;
   font-size: 48px;
-  line-height: 100%;
-  text-align: justify;
+  line-height: 1.1;
+  text-align: left;
   color: #ffffff;
   z-index: 1;
 }
@@ -148,7 +148,7 @@
   font-weight: 400;
   font-size: 24px;
   line-height: 24px;
-  text-align: justify;
+  text-align: left;
   color: #ffffff;
 }
 
