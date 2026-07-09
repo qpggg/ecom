@@ -5,16 +5,16 @@
 
 .scroll-section__sticky {
   position: sticky;
-  top: 0;
+  top: var(--header-height);
   width: 100%;
-  max-width: var(--frame-max-w);
-  height: var(--frame-h);
-  margin-inline: auto;
+  max-width: none;
+  height: calc(var(--frame-h) - var(--header-height));
+  margin-inline: 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: var(--bg-dark);
-  border-top: 1px solid var(--stroke);
+  background: #000000;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
 }
 
 .scroll-section__progress {
@@ -22,12 +22,14 @@
   inset: auto 0 0;
   z-index: 10;
   height: 2px;
-  background: var(--stroke);
+  background: rgba(255, 255, 255, 0.14);
+  pointer-events: none;
+  transition: opacity 0.15s ease-out;
 }
 
 .scroll-section__progress-bar {
   height: 100%;
-  background: var(--accent);
+  background: #ffffff;
   transform-origin: left;
 }
 
@@ -37,7 +39,7 @@
   }
 
   .scroll-section__sticky {
-    height: min(100svh, calc(100vw * 9 / 16));
+    height: min(calc(100svh - var(--header-height)), calc(100vw * 9 / 16));
     max-width: 100%;
   }
 }

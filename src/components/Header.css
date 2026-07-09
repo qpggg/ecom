@@ -1,80 +1,117 @@
 .header {
   position: fixed;
-  inset: 0 0 auto;
-  z-index: 100;
-  padding: 1.25rem 0;
-}
-
-.header::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(11, 15, 20, 0.9), transparent);
+  inset: 0 auto auto 0;
+  z-index: 1000;
+  width: 100vw;
+  height: var(--header-height);
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   pointer-events: none;
 }
 
-.header__inner {
+.header__viewport {
   position: relative;
-  width: min(var(--container), 100% - 3rem);
-  margin-inline: auto;
-  display: flex;
-  align-items: center;
-  gap: 2rem;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: auto;
 }
 
-.header__logo {
-  font-family: var(--font-body);
-  font-size: 1.125rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: var(--text-primary);
+.header__design {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1440px;
+  height: 90px;
+  transform-origin: top left;
+  transform: scale(var(--fig-scale, 0.9722));
 }
 
-.header__logo-dot {
-  color: var(--accent);
+.header__design > * {
+  position: absolute;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-.header__nav {
-  display: flex;
-  gap: 2rem;
-  margin-left: auto;
-}
-
-.header__link {
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  transition: color 0.2s;
-}
-
-.header__link:hover {
-  color: var(--text-primary);
-}
-
-.header__cta {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.625rem 1.25rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--text-on-accent);
-  background: var(--accent);
-  border-radius: 4px;
-  transition: background 0.2s;
+/* //2026 — Figma left: 47; top tightened for vertical rhythm */
+.header__year {
+  left: 47px;
+  top: 48px;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 26px;
+  color: #ffffff;
   white-space: nowrap;
 }
 
-.header__cta:hover {
-  background: var(--accent-hover);
+.header__nav {
+  inset: 0;
+  pointer-events: none;
 }
 
-@media (max-width: 768px) {
-  .header__nav {
-    display: none;
-  }
+.header__link {
+  position: absolute;
+  top: 48px;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 26px;
+  color: #ffffff;
+  text-transform: lowercase;
+  white-space: nowrap;
+  pointer-events: auto;
+  transition: opacity 0.2s;
+}
 
-  .header__cta {
-    margin-left: auto;
-    padding: 0.5rem 0.875rem;
-    font-size: 0.8125rem;
-  }
+.header__link--scroll {
+  left: 528px;
+}
+
+.header__link--pain {
+  left: 775px;
+}
+
+.header__link--pricing {
+  left: 940px;
+}
+
+.header__link--form {
+  left: 1129px;
+}
+
+.header__link:hover {
+  opacity: 0.7;
+}
+
+/* Arrow 4 — Figma left: 1265.99; top shifted with nav text */
+.header__arrow-line {
+  left: 1265.99px;
+  top: 62px;
+  width: 107px;
+  height: 2px;
+  background: #ffffff;
+  pointer-events: none;
+}
+
+.header__arrow-line::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 11px;
+  height: 11px;
+  border-top: 2px solid #ffffff;
+  border-right: 2px solid #ffffff;
+  transform: translateY(-50%) rotate(45deg);
+  transform-origin: center;
+}
+
+.header__arrow-hit {
+  left: 1250px;
+  top: 48px;
+  width: 140px;
+  height: 26px;
+  pointer-events: auto;
 }

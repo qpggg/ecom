@@ -1,10 +1,14 @@
+.scene--flat {
+  border-top: none;
+}
+
 .scene {
   position: relative;
   width: 100%;
   max-width: var(--frame-max-w);
   margin-inline: auto;
   overflow: hidden;
-  border-top: 1px solid var(--stroke);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
   --bg-x: 0.5;
   --bg-y: 0.5;
 }
@@ -18,23 +22,12 @@
 .scene__bg {
   position: absolute;
   inset: 0;
-  background: var(--bg-dark);
+  background: #000000;
   pointer-events: none;
-  isolation: isolate;
 }
 
 .scene__spotlight {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  pointer-events: none;
-  background: radial-gradient(
-    circle 32vmin at calc(var(--bg-x) * 100%) calc(var(--bg-y) * 100%),
-    rgba(148, 163, 184, 0.12),
-    rgba(148, 163, 184, 0.035) 38%,
-    transparent 68%
-  );
-  mix-blend-mode: soft-light;
+  display: none;
 }
 
 .scene__grid {
@@ -42,42 +35,19 @@
   inset: 0;
   z-index: 1;
   background-image:
-    linear-gradient(var(--stroke) 1px, transparent 1px),
-    linear-gradient(90deg, var(--stroke) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
   background-size: calc(100% / 12) calc(100% / 9);
-  opacity: 0.35;
+  opacity: 0.25;
   mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
-  transform: translate3d(
-    calc((var(--bg-x) - 0.5) * 12px),
-    calc((var(--bg-y) - 0.5) * 8px),
-    0
-  );
 }
 
 .scene__glow {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background:
-    radial-gradient(ellipse 55% 45% at 72% 85%, rgba(148, 163, 184, 0.04), transparent 58%),
-    radial-gradient(ellipse 35% 35% at 18% 25%, rgba(148, 163, 184, 0.02), transparent 52%);
+  display: none;
 }
 
 .scene__grain {
-  position: absolute;
-  inset: 0;
-  z-index: 4;
-  opacity: 0.085;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.25' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 140px 140px;
-  background-position: calc(var(--bg-x) * 100%) calc(var(--bg-y) * 100%);
-  mix-blend-mode: overlay;
-  transform: translate3d(
-    calc((var(--bg-x) - 0.5) * -8px),
-    calc((var(--bg-y) - 0.5) * -6px),
-    0
-  );
+  display: none;
 }
 
 .scene__content {
@@ -97,21 +67,11 @@
 }
 
 .panel-3d {
-  border: 1px solid var(--stroke-strong);
-  border-radius: 12px;
-  background: var(--surface);
-  backdrop-filter: blur(10px);
-  box-shadow:
-    0 0 0 1px rgba(148, 163, 184, 0.08),
-    0 24px 48px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 0;
+  background: #000000;
+  box-shadow: none;
   transform-style: preserve-3d;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .scene__grid,
-  .scene__grain {
-    transform: none !important;
-  }
 }
 
 @media (max-width: 900px) {

@@ -5,7 +5,7 @@ export function Footer() {
   return (
     <SceneShell className="footer-scene" frame={false}>
       <div className="scene__content--wide footer__inner">
-        <p className="footer__brand">commerce.</p>
+        <p className="footer__brand">grizzard</p>
         <div className="footer__links">
           <a href="https://усафонова.рф" target="_blank" rel="noreferrer">
             усафонова.рф

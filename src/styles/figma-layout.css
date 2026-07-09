@@ -1,0 +1,26 @@
+/* Figma Frame 12 — 1440px design grid */
+.figma-canvas {
+  --figma-w: 1440;
+  position: relative;
+  width: min(100%, 1440px);
+  margin-inline: auto;
+  overflow: hidden;
+}
+
+.figma-canvas--hero {
+  height: clamp(405px, 56.25vw, 810px);
+}
+
+.figma-canvas--pain {
+  height: clamp(405px, 56.25vw, 810px);
+}
+
+.figma-canvas--metrics {
+  height: clamp(405px, 56.25vw, 810px);
+}
+
+.figma-el {
+  position: absolute;
+  margin: 0;
+  box-sizing: border-box;
+}

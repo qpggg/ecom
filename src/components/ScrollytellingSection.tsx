@@ -28,10 +28,15 @@ function ScrollProgress({
   progress: ReturnType<typeof useScroll>['scrollYProgress']
 }) {
   const width = useTransform(progress, [0, 1], ['0%', '100%'])
+  const opacity = useTransform(progress, [0, 0.92, 1], [1, 1, 0])
 
   return (
-    <div className="scroll-section__progress" aria-hidden>
+    <motion.div
+      className="scroll-section__progress"
+      aria-hidden
+      style={{ opacity }}
+    >
       <motion.div className="scroll-section__progress-bar" style={{ width }} />
-    </div>
+    </motion.div>
   )
 }

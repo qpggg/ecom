@@ -1,31 +1,34 @@
 import './Header.css'
 
 const NAV = [
-  { label: 'Как работает', href: '#scroll' },
-  { label: 'Боль', href: '#pain' },
-  { label: 'Тарифы', href: '#pricing' },
-  { label: 'Заявка', href: '#form' },
-]
+  { label: 'как работает', href: '#scroll', mod: 'header__link--scroll' },
+  { label: 'хаос', href: '#pain', mod: 'header__link--pain' },
+  { label: 'тарифы', href: '#pricing', mod: 'header__link--pricing' },
+  { label: 'заявка', href: '#form', mod: 'header__link--form' },
+] as const
 
 export function Header() {
   return (
     <header className="header">
-      <div className="header__inner container">
-        <a href="#" className="header__logo">
-          commerce<span className="header__logo-dot">.</span>
-        </a>
+      <div className="header__viewport">
+        <div className="header__design">
+          <span className="header__year">//2026</span>
 
-        <nav className="header__nav" aria-label="Основная навигация">
-          {NAV.map((item) => (
-            <a key={item.href} href={item.href} className="header__link">
-              {item.label}
-            </a>
-          ))}
-        </nav>
+          <nav className="header__nav" aria-label="Основная навигация">
+            {NAV.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className={`header__link ${item.mod}`}
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
 
-        <a href="#form" className="header__cta">
-          Разобрать магазин
-        </a>
+          <span className="header__arrow-line" aria-hidden />
+          <a href="#form" className="header__arrow-hit" aria-label="Заявка" />
+        </div>
       </div>
     </header>
   )

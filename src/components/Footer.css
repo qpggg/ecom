@@ -12,7 +12,10 @@
 .footer__brand {
   grid-column: 1 / 4;
   margin: 0;
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.25rem;
+  text-transform: lowercase;
 }
 
 .footer__links {
@@ -24,7 +27,9 @@
 }
 
 .footer__links a {
+  font-family: var(--font-mono);
   font-size: 0.875rem;
+  font-weight: 400;
   color: var(--text-secondary);
   transition: color 0.2s;
 }
@@ -36,7 +41,9 @@
 .footer__copy {
   grid-column: 1 / -1;
   margin: 0.5rem 0 0;
+  font-family: var(--font-mono);
   font-size: 0.75rem;
+  font-weight: 400;
   color: var(--text-muted);
 }
 

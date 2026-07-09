@@ -1,78 +1,59 @@
-import { motion } from 'framer-motion'
-import { SceneShell } from './SceneShell'
-import { SectionLabel } from './SectionLabel'
 import './MetricsSection.css'
+
+const LIST_TOP = 257 // arrow6 bottom (241) + 16px gap
 
 const STATS = [
   {
-    value: '200+',
-    label: 'товаров в одном каталоге',
-    case: 'усафонова.рф',
-    href: 'https://усафонова.рф',
+    num: '01',
+    head: 'До 45% выручки',
+    body:
+      'Съедают комиссии, штрафы и логистика посредников. Это не расходы, это налог на отсутствие своей системы.',
   },
   {
-    value: 'сек',
-    label: 'заявка уходит в Telegram',
-    case: 'рабочий сценарий заказа',
+    num: '02',
+    head: '30% заявок в корзину',
+    body:
+      'Теряются из-за человеческого фактора и отсутствия сквозной аналитики. Вы платите за рекламу, чтобы просто «выбросить» треть бюджета.',
   },
   {
-    value: '1',
-    label: 'Telegram вместо пяти чатов',
-    case: 'система заявок',
-  },
-  {
-    value: 'auto',
-    label: 'фиксация оплаченного заказа',
-    case: 'Baekkey · платёжный контур',
-    href: 'https://baekkey.kz',
+    num: '03',
+    head: 'В 5 раз ниже стоимость продажи',
+    body:
+      'Повторные продажи своей базе — самый дешевый способ роста. Без своей системы вы лишены этого рычага масштабирования.',
   },
 ]
 
 export function MetricsSection() {
   return (
-    <SceneShell id="metrics" className="metrics">
-      <div className="scene__content--wide metrics__inner">
-        <SectionLabel index="04">Решение</SectionLabel>
+    <section id="metrics" className="metrics">
+      <div className="metrics__design">
+        <span className="metrics__ellipse" aria-hidden />
+        <span className="metrics__line27" aria-hidden />
 
-        <motion.div
-          className="metrics__header"
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="metrics__title">
-            Когда хаос собран — <em>цифры по делу</em>
-          </h2>
-          <p className="metrics__sub">
-            Не «+500% продаж». Рабочая инфраструктура: каталог, заявки, статусы — уже
-            у клиентов.
-          </p>
-        </motion.div>
+        <span className="metrics__label metrics__label--index">//03</span>
+        <span className="metrics__label metrics__label--title">цифры</span>
 
-        <div className="metrics__grid">
-          {STATS.map((stat, i) => (
-            <motion.article
-              key={stat.label}
-              className="metrics__card panel-3d"
-              initial={{ opacity: 0, y: 36, rotateX: 10 }}
-              whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-              viewport={{ once: true, margin: '-30px' }}
-              transition={{ delay: i * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <p className="metrics__value">{stat.value}</p>
-              <p className="metrics__label">{stat.label}</p>
-              {stat.href ? (
-                <a href={stat.href} target="_blank" rel="noreferrer" className="metrics__case">
-                  {stat.case} ↗
-                </a>
-              ) : (
-                <p className="metrics__case">{stat.case}</p>
+        <h2 className="metrics__statement">
+          Цифры отражают действительные трудности без собственной инфраструктуры
+        </h2>
+
+        <span className="metrics__arrow6" aria-hidden />
+
+        <div className="metrics__list" style={{ top: LIST_TOP }}>
+          {STATS.map((item, index) => (
+            <div key={item.num} className="metrics__entry">
+              <span className="metrics__num">{item.num}</span>
+              <p className="metrics__row">
+                <span className="metrics__row-head">{item.head}</span>
+                <span className="metrics__row-body">{item.body}</span>
+              </p>
+              {index < STATS.length - 1 && (
+                <span className="metrics__line" aria-hidden />
               )}
-            </motion.article>
+            </div>
           ))}
         </div>
       </div>
-    </SceneShell>
+    </section>
   )
 }

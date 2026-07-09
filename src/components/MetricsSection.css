@@ -1,86 +1,171 @@
-.metrics__inner {
+/* Frame 12 slice 2430–3240 */
+.metrics {
+  position: relative;
   width: 100%;
-}
-
-.metrics__header {
-  max-width: 36rem;
-  margin-bottom: clamp(2rem, 4vh, 3rem);
-}
-
-.metrics__title {
+  height: calc(var(--fig-scale, 0.9722) * 810px);
   margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(1.75rem, 3vw, 2.75rem);
-  font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  padding: 0;
+  background: #000000;
+  overflow: hidden;
 }
 
-.metrics__title em {
-  font-style: italic;
-  color: var(--accent);
+.metrics__design {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1440px;
+  height: 810px;
+  transform-origin: top left;
+  transform: scale(var(--fig-scale, 0.9722));
 }
 
-.metrics__sub {
-  margin: 1rem 0 0;
-  font-size: clamp(0.9375rem, 1.1vw, 1rem);
-  line-height: 1.6;
-  color: var(--text-secondary);
+.metrics__design > * {
+  position: absolute;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-.metrics__grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--grid-gap);
-  perspective: 1000px;
+/* Ellipse 70 (bottom slice) */
+.metrics__ellipse {
+  left: -385px;
+  top: -396px;
+  width: 1635px;
+  height: 1546px;
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    rgba(217, 217, 217, 0.82) 0%,
+    rgba(0, 0, 0, 0.3526) 100%
+  );
+  z-index: 0;
+  pointer-events: none;
 }
 
-.metrics__card {
-  padding: clamp(1.5rem, 2.5vw, 2rem);
-  transform-style: preserve-3d;
-  transition: border-color 0.25s, transform 0.25s;
-}
-
-.metrics__card:hover {
-  border-color: var(--accent);
-  transform: translateY(-4px) translateZ(8px);
-}
-
-.metrics__value {
-  margin: 0 0 0.5rem;
-  font-family: var(--font-display);
-  font-size: clamp(2.25rem, 3.5vw, 3.25rem);
-  line-height: 1;
-  color: var(--accent);
+/* Line 27 — continuation from pain (-35→237) */
+.metrics__line27 {
+  left: 894px;
+  top: -35px;
+  width: 3px;
+  height: 272px;
+  display: block;
+  background: #000000;
+  z-index: 0;
 }
 
 .metrics__label {
-  margin: 0 0 1rem;
-  font-size: 0.9375rem;
-  color: var(--text-primary);
-}
-
-.metrics__case {
-  margin: 0;
+  top: 0;
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.04em;
-  color: var(--text-muted);
-  transition: color 0.2s;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 26px;
+  color: #000000;
+  z-index: 2;
 }
 
-a.metrics__case:hover {
-  color: var(--accent);
+.metrics__label--index {
+  left: 47px;
 }
 
-@media (max-width: 900px) {
-  .metrics__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.metrics__label--title {
+  left: 639px;
 }
 
-@media (max-width: 520px) {
-  .metrics__grid {
-    grid-template-columns: 1fr;
-  }
+.metrics__statement {
+  left: 47px;
+  top: 68px;
+  width: 649px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-synthesis: weight;
+  font-size: 40px;
+  line-height: 1.1;
+  text-align: left;
+  color: #000000;
+  z-index: 2;
+}
+
+/* Arrow 6 — horizontal run from line27 (x=894) left toward stat 01 */
+.metrics__arrow6 {
+  left: 762px;
+  top: 238px;
+  width: 135px;
+  height: 3px;
+  display: block;
+  background: #000000;
+  z-index: 1;
+}
+
+.metrics__arrow6::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-top: 3px solid #000000;
+  border-left: 3px solid #000000;
+  transform: translateY(-50%) rotate(-45deg);
+  transform-origin: center;
+}
+
+.metrics__list {
+  position: absolute;
+  left: 0;
+  width: 1440px;
+  z-index: 2;
+}
+
+.metrics__entry {
+  position: relative;
+  padding-bottom: 30px;
+}
+
+.metrics__entry:last-child {
+  padding-bottom: 0;
+}
+
+.metrics__num {
+  position: absolute;
+  top: 0;
+  left: 712px;
+  width: 29px;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 100%;
+  color: #000000;
+}
+
+.metrics__row {
+  position: relative;
+  margin: 0 0 0 135px;
+  padding: 0;
+  width: 565px;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 24px;
+  text-align: left;
+  color: #000000;
+}
+
+.metrics__row-head {
+  display: block;
+  font-weight: 700;
+}
+
+.metrics__row-body {
+  display: block;
+  font-weight: 400;
+  margin-top: 4px;
+}
+
+/* Lines 28 / 29 — 16px below text, same for every entry */
+.metrics__line {
+  position: absolute;
+  left: 47px;
+  bottom: 14px;
+  width: 653px;
+  height: 0;
+  border: 1px solid #000000;
+  z-index: 1;
 }

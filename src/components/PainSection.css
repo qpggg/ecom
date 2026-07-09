@@ -1,78 +1,192 @@
-.pain__inner {
+/* Frame 12 slice 1620–2430 */
+.pain {
+  position: relative;
   width: 100%;
-}
-
-.pain__layout {
-  display: grid;
-  grid-template-columns: 1fr 1.1fr;
-  gap: clamp(2rem, 4vw, 4rem);
-  align-items: center;
-  perspective: 1200px;
-}
-
-.pain__title {
+  height: calc(var(--fig-scale, 0.9722) * 810px);
   margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3.25rem);
+  padding: 0;
+  background: #000000;
+  overflow: hidden;
+}
+
+.pain__design {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1440px;
+  height: 810px;
+  transform-origin: top left;
+  transform: scale(var(--fig-scale, 0.9722));
+}
+
+.pain__design > * {
+  position: absolute;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Ellipse 70 (top slice) */
+.pain__ellipse {
+  left: -385px;
+  top: 414px;
+  width: 1635px;
+  height: 1546px;
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    rgba(217, 217, 217, 0.82) 0%,
+    rgba(0, 0, 0, 0.3526) 100%
+  );
+  z-index: 0;
+  pointer-events: none;
+}
+
+.pain__label {
+  top: 0;
+  font-family: var(--font-mono);
   font-weight: 400;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
+  font-size: 20px;
+  line-height: 26px;
+  color: #ffffff;
+  z-index: 1;
 }
 
-.pain__title em {
-  font-style: italic;
-  color: var(--accent);
+.pain__label--index {
+  left: 47px;
 }
 
-.pain__lead {
-  margin: 1.25rem 0 0;
-  max-width: 28rem;
-  font-size: clamp(0.9375rem, 1.2vw, 1.0625rem);
-  line-height: 1.65;
-  color: var(--text-secondary);
+.pain__label--title {
+  left: 700px;
 }
 
-.pain__note {
-  margin: 1.5rem 0 0;
-  padding-left: 1rem;
-  border-left: 2px solid var(--accent);
+.pain__statement {
+  left: 47px;
+  top: 110px;
+  width: 649px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-synthesis: weight;
+  font-size: 48px;
+  line-height: 100%;
+  text-align: justify;
+  color: #ffffff;
+  z-index: 1;
+}
+
+/* Line 24 — horizontal run ends at x=896 */
+.pain__line24 {
+  left: 720px;
+  top: 210px;
+  width: 176px;
+  height: 2px;
+  display: block;
+  background: #ffffff;
+  z-index: 1;
+}
+
+/* Arrow 5 — vertical drop from corner (896, 210) */
+.pain__arrow5 {
+  left: 896px;
+  top: 210px;
+  width: 2px;
+  height: 73px;
+  display: block;
+  background: #ffffff;
+  z-index: 1;
+}
+
+.pain__arrow5::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  transform: translate(-50%, 50%) rotate(45deg);
+  transform-origin: center;
+}
+
+.pain__list {
+  position: absolute;
+  top: 296px;
+  left: 782px;
+  width: 571px;
+  z-index: 2;
+}
+
+.pain__entry {
+  position: relative;
+  padding-bottom: 28px;
+}
+
+.pain__entry:last-child {
+  padding-bottom: 0;
+}
+
+.pain__num {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 29px;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  line-height: 1.6;
-  color: var(--text-muted);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 24px;
+  color: #ffffff;
 }
 
-.pain__cards {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+.pain__num--muted {
+  color: #ededed;
 }
 
-.pain__card {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 1rem;
-  align-items: start;
-  padding: 1rem 1.125rem;
-  transform-style: preserve-3d;
-}
-
-.pain__card-index {
+.pain__item {
+  margin: 0 0 0 42px;
+  padding: 0;
+  width: 529px;
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.08em;
-  color: var(--accent);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 24px;
+  text-align: justify;
+  color: #ffffff;
 }
 
-.pain__card p {
-  margin: 0;
-  font-size: 0.9375rem;
-  line-height: 1.45;
-  color: var(--text-primary);
+.pain__item-head {
+  display: block;
+  font-weight: 600;
 }
 
-@media (max-width: 900px) {
-  .pain__layout {
-    grid-template-columns: 1fr;
-  }
+.pain__item-body {
+  display: block;
+  font-weight: 400;
+}
+
+.pain__item--muted,
+.pain__entry--muted .pain__item {
+  color: #ededed;
+}
+
+.pain__divider {
+  position: absolute;
+  left: 42px;
+  bottom: 14px;
+  width: 529.02px;
+  height: 0;
+  border: 0.5px solid #ffffff;
+}
+
+.pain__entry--muted .pain__divider {
+  border-color: #ededed;
+}
+
+/* Line 27 — visible tail in pain slice (775→810 = 35px) */
+.pain__line27 {
+  left: 894px;
+  top: 775px;
+  width: 3px;
+  height: 35px;
+  display: block;
+  background: #000000;
+  z-index: 0;
 }

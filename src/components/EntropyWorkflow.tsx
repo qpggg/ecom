@@ -1,4 +1,10 @@
-import { type MotionValue, motion, useTransform } from 'framer-motion'
+import { useCallback, useLayoutEffect, useRef, useState } from 'react'
+import {
+  type MotionValue,
+  motion,
+  useMotionValueEvent,
+  useTransform,
+} from 'framer-motion'
 import './EntropyWorkflow.css'
 
 type NodeDef = {
@@ -72,14 +78,94 @@ const DEBRIS = [
   { id: 'd6', text: 'а цена?', x: 200, y: 380, z: 480, rz: 12 },
 ]
 
-const EDGES = [
-  ['catalog', 'card'],
-  ['card', 'order'],
-  ['order', 'crm'],
-  ['order', 'admin'],
-  ['crm', 'sales'],
-  ['admin', 'sales'],
-] as const
+type EdgeSide = 'left' | 'right' | 'top' | 'bottom'
+
+type EdgeSpec = {
+  from: string
+  to: string
+  fromSide: EdgeSide
+  fromRatio?: number
+  toSide: EdgeSide
+  toRatio?: number
+}
+
+const EDGE_SPECS: EdgeSpec[] = [
+  { from: 'catalog', to: 'card', fromSide: 'right', toSide: 'left' },
+  { from: 'card', to: 'order', fromSide: 'right', toSide: 'left' },
+  { from: 'order', to: 'crm', fromSide: 'right', fromRatio: 0.35, toSide: 'left' },
+  { from: 'order', to: 'admin', fromSide: 'right', fromRatio: 0.65, toSide: 'left' },
+  { from: 'crm', to: 'sales', fromSide: 'right', toSide: 'left', toRatio: 0.35 },
+  { from: 'admin', to: 'sales', fromSide: 'right', toSide: 'left', toRatio: 0.65 },
+]
+
+type EdgePath = { id: string; d: string; outcome: boolean }
+
+function edgeAnchor(rect: DOMRect, side: EdgeSide, ratio = 0.5) {
+  switch (side) {
+    case 'left':
+      return { x: rect.left, y: rect.top + rect.height * ratio }
+    case 'right':
+      return { x: rect.right, y: rect.top + rect.height * ratio }
+    case 'top':
+      return { x: rect.left + rect.width * ratio, y: rect.top }
+    case 'bottom':
+      return { x: rect.left + rect.width * ratio, y: rect.bottom }
+  }
+}
+
+function insetAlongLine(
+  start: { x: number; y: number },
+  end: { x: number; y: number },
+  insetPx: number,
+) {
+  const dx = end.x - start.x
+  const dy = end.y - start.y
+  const len = Math.hypot(dx, dy)
+  if (len <= insetPx) return end
+  const t = insetPx / len
+  return { x: end.x - dx * t, y: end.y - dy * t }
+}
+
+function toViewBox(point: { x: number; y: number }, box: DOMRect) {
+  return {
+    x: ((point.x - box.left) / box.width) * 100,
+    y: ((point.y - box.top) / box.height) * 100,
+  }
+}
+
+function buildEdgePaths(container: HTMLElement): EdgePath[] {
+  const box = container.getBoundingClientRect()
+  if (box.width < 1 || box.height < 1) return []
+
+  const nodeRect = (id: string) => {
+    const el = container.querySelector<HTMLElement>(`[data-node-id="${id}"]`)
+    return el?.getBoundingClientRect() ?? null
+  }
+
+  return EDGE_SPECS.flatMap((spec) => {
+    const fromRect = nodeRect(spec.from)
+    const toRect = nodeRect(spec.to)
+    if (!fromRect || !toRect) return []
+
+    const start = edgeAnchor(fromRect, spec.fromSide, spec.fromRatio)
+    let end = edgeAnchor(toRect, spec.toSide, spec.toRatio)
+    const outcome = spec.to === 'sales'
+    if (outcome) {
+      end = insetAlongLine(start, end, 2)
+    }
+
+    const a = toViewBox(start, box)
+    const b = toViewBox(end, box)
+
+    return [
+      {
+        id: `${spec.from}-${spec.to}`,
+        d: `M ${a.x} ${a.y} L ${b.x} ${b.y}`,
+        outcome,
+      },
+    ]
+  })
+}
 
 type EntropyWorkflowProps = {
   progress: MotionValue<number>
@@ -87,7 +173,7 @@ type EntropyWorkflowProps = {
 }
 
 export function EntropyWorkflow({ progress, full = false }: EntropyWorkflowProps) {
-  const shellOpacity = useTransform(progress, [0.45, 0.75], [0, 1])
+  const worldRef = useRef<HTMLDivElement>(null)
   const gridOpacity = useTransform(progress, [0.35, 0.65], [0, 0.5])
   const worldRotateX = useTransform(progress, [0, 0.55, 1], [22, 10, 0])
   const worldRotateY = useTransform(progress, [0, 0.55, 1], [-18, -6, 0])
@@ -96,14 +182,6 @@ export function EntropyWorkflow({ progress, full = false }: EntropyWorkflowProps
 
   return (
     <div className={`entropy${full ? ' entropy--full' : ''}`}>
-      <motion.div className="entropy__shell" style={{ opacity: shellOpacity }}>
-        <div className="entropy__shell-top">
-          <span className="entropy__pill entropy__pill--active">ЗАЯВКИ</span>
-          <span className="entropy__pill">КАТАЛОГ</span>
-          <span className="entropy__shell-title">order flow</span>
-        </div>
-      </motion.div>
-
       <motion.div className="entropy__grid-bg" style={{ opacity: gridOpacity }} aria-hidden />
 
       <motion.div className="entropy__entropy-tag" style={{ opacity: entropyLabel }} aria-hidden>
@@ -111,6 +189,7 @@ export function EntropyWorkflow({ progress, full = false }: EntropyWorkflowProps
       </motion.div>
 
       <motion.div
+        ref={worldRef}
         className="entropy__world"
         style={{
           rotateX: worldRotateX,
@@ -118,13 +197,13 @@ export function EntropyWorkflow({ progress, full = false }: EntropyWorkflowProps
           scale: worldScale,
         }}
       >
-        <WorkflowEdges progress={progress} />
         {DEBRIS.map((d) => (
           <Debris key={d.id} item={d} progress={progress} />
         ))}
         {NODES.map((node) => (
           <WorkflowNode key={node.id} node={node} progress={progress} />
         ))}
+        <WorkflowEdges worldRef={worldRef} progress={progress} />
       </motion.div>
     </div>
   )
@@ -137,19 +216,16 @@ function WorkflowNode({ node, progress }: { node: NodeDef; progress: MotionValue
   const rotateX = useTransform(progress, [0, 0.55, 1], [node.chaos.rx, node.chaos.rx * 0.12, 0])
   const rotateY = useTransform(progress, [0, 0.55, 1], [node.chaos.ry, node.chaos.ry * 0.12, 0])
   const rotateZ = useTransform(progress, [0, 0.55, 1], [node.chaos.rz, node.chaos.rz * 0.12, 0])
-  const opacity = useTransform(progress, [0, 0.1, 1], [0.75, 1, 1])
-  const blur = useTransform(progress, [0, 0.4, 0.85], [10, 2, 0])
-  const filter = useTransform(blur, (v) => `blur(${v}px)`)
+  const opacity = useTransform(progress, [0, 0.1, 0.55, 1], [0.45, 0.75, 1, 1])
   const outcomeGlow = useTransform(progress, [0.72, 1], [0, 1])
   const boxShadow = useTransform(outcomeGlow, (v) =>
-    node.highlight
-      ? `0 0 0 1px rgba(148, 163, 184, ${0.22 + v * 0.18}), 0 0 ${20 + v * 36}px rgba(148, 163, 184, ${0.1 + v * 0.14}), 0 24px 48px rgba(0, 0, 0, 0.45)`
-      : '0 0 0 1px rgba(148, 163, 184, 0.08), 0 24px 48px rgba(0, 0, 0, 0.45)',
+    node.highlight ? `0 0 0 ${1 + v}px rgba(255, 255, 255, ${0.55 + v * 0.45})` : 'none',
   )
 
   return (
     <motion.div
       className={`entropy__node${node.highlight ? ' entropy__node--outcome' : ''}`}
+      data-node-id={node.id}
       style={{
         x,
         y,
@@ -158,7 +234,6 @@ function WorkflowNode({ node, progress }: { node: NodeDef; progress: MotionValue
         rotateY,
         rotateZ,
         opacity,
-        filter,
         boxShadow: node.highlight ? boxShadow : undefined,
         left: `${node.final.x}%`,
         top: `${node.final.y}%`,
@@ -203,14 +278,40 @@ function Debris({
   )
 }
 
-function WorkflowEdges({ progress }: { progress: MotionValue<number> }) {
+function WorkflowEdges({
+  worldRef,
+  progress,
+}: {
+  worldRef: React.RefObject<HTMLDivElement | null>
+  progress: MotionValue<number>
+}) {
   const lineOpacity = useTransform(progress, [0.48, 0.72, 1], [0, 0.55, 1])
-  const dashOffset = useTransform(progress, [0.48, 0.85], [140, 0])
+  const [paths, setPaths] = useState<EdgePath[]>([])
 
-  const pos = Object.fromEntries(NODES.map((n) => [n.id, n.final])) as Record<
-    string,
-    { x: number; y: number }
-  >
+  const measure = useCallback(() => {
+    const world = worldRef.current
+    if (!world) return
+    setPaths(buildEdgePaths(world))
+  }, [worldRef])
+
+  useLayoutEffect(() => {
+    measure()
+    const world = worldRef.current
+    if (!world) return
+
+    const ro = new ResizeObserver(() => measure())
+    ro.observe(world)
+    window.addEventListener('resize', measure)
+
+    return () => {
+      ro.disconnect()
+      window.removeEventListener('resize', measure)
+    }
+  }, [measure, worldRef])
+
+  useMotionValueEvent(progress, 'change', (v) => {
+    if (v >= 0.48) requestAnimationFrame(measure)
+  })
 
   return (
     <motion.svg
@@ -220,21 +321,14 @@ function WorkflowEdges({ progress }: { progress: MotionValue<number> }) {
       style={{ opacity: lineOpacity }}
       aria-hidden
     >
-      {EDGES.map(([from, to]) => {
-        const a = pos[from]
-        const b = pos[to]
-        const mx = (a.x + b.x) / 2
-        const isOutcome = to === 'sales'
-        const d = `M ${a.x} ${a.y + 4} C ${mx} ${a.y + 4}, ${mx} ${b.y + 4}, ${b.x} ${b.y + 4}`
-        return (
-          <motion.path
-            key={`${from}-${to}`}
-            d={d}
-            className={`entropy__edge${isOutcome ? ' entropy__edge--outcome' : ''}`}
-            style={{ strokeDashoffset: dashOffset }}
-          />
-        )
-      })}
+      {paths.map((edge) => (
+        <path
+          key={edge.id}
+          d={edge.d}
+          className={`entropy__edge${edge.outcome ? ' entropy__edge--outcome' : ''}`}
+          vectorEffect="non-scaling-stroke"
+        />
+      ))}
     </motion.svg>
   )
 }
