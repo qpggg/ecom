@@ -5,7 +5,7 @@ import './styles/figma-layout.css'
 import './styles/mobile.css'
 import App from './App.tsx'
 
-const MOBILE_BREAKPOINT = 768
+const MOBILE_BREAKPOINT = 900
 
 // Figma frame is 1440px wide; scale only on tablet/desktop canvases
 function syncFigmaScale() {

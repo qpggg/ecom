@@ -185,11 +185,6 @@
     max-width: 100%;
     aspect-ratio: 4 / 3;
   }
-
-  .entropy--full .entropy__node {
-    width: 88px;
-    margin-left: -2.75rem;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

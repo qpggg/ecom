@@ -139,4 +139,8 @@ img {
     min-height: auto;
     aspect-ratio: auto;
   }
+
+  main [id] {
+    scroll-margin-top: calc(var(--header-height) + 0.5rem);
+  }
 }

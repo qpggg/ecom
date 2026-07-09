@@ -30,8 +30,10 @@ export function PainSection() {
       <div className="pain__design">
         <span className="pain__ellipse" aria-hidden />
 
-        <span className="pain__label pain__label--index">//02</span>
-        <span className="pain__label pain__label--title">хаос</span>
+        <div className="pain__labels">
+          <span className="pain__label pain__label--index">//02</span>
+          <span className="pain__label pain__label--title">хаос</span>
+        </div>
 
         <h2 className="pain__statement">
           Товарный бизнес теряет контроль над клиентом и системой.

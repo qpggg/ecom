@@ -28,8 +28,10 @@ export function MetricsSection() {
         <span className="metrics__ellipse" aria-hidden />
         <span className="metrics__line27" aria-hidden />
 
-        <span className="metrics__label metrics__label--index">//03</span>
-        <span className="metrics__label metrics__label--title">цифры</span>
+        <div className="metrics__labels">
+          <span className="metrics__label metrics__label--index">//03</span>
+          <span className="metrics__label metrics__label--title">цифры</span>
+        </div>
 
         <h2 className="metrics__statement">
           Цифры отражают действительные трудности без собственной инфраструктуры

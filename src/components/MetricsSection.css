@@ -51,8 +51,20 @@
   z-index: 0;
 }
 
-.metrics__label {
+.metrics__labels {
+  position: absolute;
   top: 0;
+  left: 47px;
+  right: 47px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  z-index: 2;
+}
+
+.metrics__label {
+  position: static;
+  top: auto;
   font-family: var(--font-mono);
   font-weight: 400;
   font-size: 20px;
@@ -62,11 +74,11 @@
 }
 
 .metrics__label--index {
-  left: 47px;
+  left: auto;
 }
 
 .metrics__label--title {
-  left: 639px;
+  left: auto;
 }
 
 .metrics__statement {

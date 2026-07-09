@@ -40,8 +40,20 @@
   pointer-events: none;
 }
 
-.pain__label {
+.pain__labels {
+  position: absolute;
   top: 0;
+  left: 47px;
+  right: 47px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  z-index: 1;
+}
+
+.pain__label {
+  position: static;
+  top: auto;
   font-family: var(--font-mono);
   font-weight: 400;
   font-size: 20px;
@@ -51,11 +63,11 @@
 }
 
 .pain__label--index {
-  left: 47px;
+  left: auto;
 }
 
 .pain__label--title {
-  left: 700px;
+  left: auto;
 }
 
 .pain__statement {
