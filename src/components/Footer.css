@@ -47,7 +47,7 @@
   color: var(--text-muted);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .footer__brand,
   .footer__links {
     grid-column: 1 / -1;
@@ -55,5 +55,11 @@
 
   .footer__links {
     justify-content: flex-start;
+  }
+
+  .footer__links a {
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
   }
 }

@@ -172,6 +172,10 @@
     min-height: 280px;
   }
 
+  .entropy--full .entropy__debris {
+    display: none;
+  }
+
   /* ── Pain //02 ── */
   .pain {
     height: auto;
